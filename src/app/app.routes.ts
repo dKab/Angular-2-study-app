@@ -8,9 +8,9 @@ import { DataResolver } from './app.resolver';
 
 
 export const ROUTES: Routes = [
-  { path: '',      component: Courses },
-  { path: 'courses',  component: Courses },
+  { path: '', component: Courses },
+  { path: 'courses', component: Courses },
   { path: 'login', component: Login },
   { path: 'course-detail', component: CourseDetail},
-  { path: '**',    component: NoContent },
+  { path: '**', component: NoContent },
 ];

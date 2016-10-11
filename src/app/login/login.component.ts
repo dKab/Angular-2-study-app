@@ -11,10 +11,27 @@ console.log('`About` component loaded asynchronously');
 @Component({
   selector: 'login',
   styles: [`
+       .form-control-row__message--error {
+        display: none;
+       }
+       
+        .form-control-row--invalid .form-control-row__message--error {
+         display: inline-block;
+       }
+       
+       .form__message--warning {
+         display: none;
+       }
+       
+       .form--invalid .form__message--warning {
+          display: block;
+       }
+       .label__text {
+          display: inline-block;
+          min-width: 5em;
+       }
   `],
-  template: `
-    <h1>Login</h1>
-  `
+  templateUrl: './login.template.html'
 })
 export class Login {
   localState: any;

@@ -2,7 +2,38 @@ html, body{
   height: 100%;
   font-family: Arial, Helvetica, sans-serif
 }
+body {
+  margin: 0;
+}
 
 span.active {
   background-color: gray;
+}
+.header__logo {
+  display: inline-block;
+}
+.header__text {
+  display: inline-block;
+}
+
+login {
+  display: block;
+  width: 50%;
+  margin: 0 auto;
+}
+.page-wrap {
+  min-height: 100%;
+  /* equal to footer height */
+  margin-bottom: -50px;
+}
+.page-wrap:after {
+  content: "";
+  display: block;
+}
+.site-footer, .page-wrap:after {
+  height: 50px;
+}
+.site-footer {
+  line-height: 50px;
+  text-align: center;
 }

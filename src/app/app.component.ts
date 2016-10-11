@@ -16,11 +16,17 @@ import { AppState } from './app.service';
     './app.style.css'
   ],
   template: `
-    <main>
-      <router-outlet></router-outlet>
-    </main>
-    <footer>
-        Footer text
+    <div class="page-wrap">
+      <header class="header">
+       <div class="header__logo"></div>
+       <h1 class="header__text">Logo</h1>
+      </header> 
+      <main>
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+    <footer class="site-footer">
+        Copyright 2016
     </footer>
   `
 })
