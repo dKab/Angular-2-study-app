@@ -1,0 +1,34 @@
+.form__label {
+  display: inline-block;
+  min-width: 200px;
+  vertical-align: top;
+}
+
+.multiselect {
+ display: inline-block;
+}
+.multiselect__selected, .multiselect__unselected {
+  border: 1px solid black;
+  overflow-y: scroll;
+  height: 8em;
+  width: 7em;
+}
+.multiselect__selected ul, .multiselect__unselected ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.multiselect__buttons, .multiselect__selected, .multiselect__unselected {
+  display: inline-block;
+}
+
+.multiselect__buttons button {
+  display: block;
+  margin-top: 5px;
+}
+
+.multiselect__buttons {
+  vertical-align: top;
+  margin-top: 35px;
+}

@@ -1,20 +1,16 @@
-<form class="form form--login">
+<form class="form form--login form--invalid">
   <p class="form__message form__message--warning">Не верно введен логин или пароль</p>
-  <div class="form__row form-control-row">
-    <label class="form__label label">
-      <span class="label__text">Логин</span>
-      <input class="form__control" type="text" name="login">
-      <span class="form-control-row__message form-control-row__message--error">* Введите</span>
-    </label>
+  <div class="form__row form__row--invalid">
+    <label class="form__label" for="login">Логин</label>
+    <input id="login" class="form__control" type="text">
+    <span class="form__message form__message--error">* Введите</span>
   </div>
-  <div class="form__row form-control-row">
-    <label class="form__label label">
-      <span class="label__text">Пароль</span>
-      <input class="form__control" type="text" name="password">
-      <span class="form-control-row__message form-control-row__message--error">* Введите</span>
-    </label>
+  <div class="form__row">
+    <label class="form__label" for="password">Пароль</label>
+    <input id="password" class="form__control" type="password">
+    <span class="form__message form__message--error">* Введите</span>
   </div>
-  <div class="form-control-row">
+  <div class="form__row">
     <button class="form__control">Войти</button>
   </div>
 </form>

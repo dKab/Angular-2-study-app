@@ -11,14 +11,6 @@ console.log('`About` component loaded asynchronously');
 @Component({
   selector: 'login',
   styles: [`
-       .form-control-row__message--error {
-        display: none;
-       }
-       
-        .form-control-row--invalid .form-control-row__message--error {
-         display: inline-block;
-       }
-       
        .form__message--warning {
          display: none;
        }
@@ -26,7 +18,18 @@ console.log('`About` component loaded asynchronously');
        .form--invalid .form__message--warning {
           display: block;
        }
-       .label__text {
+       
+       .form__row .form__message {
+        display: none;
+       }
+       
+       .form__row--invalid .form__message--warning,
+       .form__row--invalid .form__message--error
+       {
+        display: inline-block;
+       }
+       
+       .form__label {
           display: inline-block;
           min-width: 5em;
        }

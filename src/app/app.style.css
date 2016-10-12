@@ -32,3 +32,7 @@ main {
   line-height: 50px;
   text-align: center;
 }
+
+.form .form__row {
+  margin-top: 10px;
+}
