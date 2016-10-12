@@ -5,21 +5,16 @@ html, body{
 body {
   margin: 0;
 }
-
-span.active {
-  background-color: gray;
+main {
+  width: 760px;
+  margin: auto;
 }
+
 .header__logo {
   display: inline-block;
 }
 .header__text {
   display: inline-block;
-}
-
-login {
-  display: block;
-  width: 50%;
-  margin: 0 auto;
 }
 .page-wrap {
   min-height: 100%;

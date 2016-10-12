@@ -1,1 +1,53 @@
 /*styles for courses content only*/
+.controls-panel {
+  overflow: hidden;
+}
+.controls-panel__search {
+  float: left;
+}
+.control-panel__add {
+  float: right;
+}
+
+.course-card {
+  display: flex;
+}
+
+.course-card__summary {
+  flex: 5;
+  padding: 5px;
+}
+.course-card__actions {
+  flex: 0;
+}
+.course-card__button {
+  display: block;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.course-card__title {
+  float: left;
+  margin-right: 15px;
+}
+
+.course-card__duration {
+  float: left;
+}
+
+.course-card__date {
+  float: right;
+}
+
+.courses .course-card {
+  margin-top: 10px;
+}
+
+.course-card__description {
+  text-align: left;
+}
+.course-card__summary > div {
+  overflow: hidden;
+}
+
+
