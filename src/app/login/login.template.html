@@ -1,16 +1,22 @@
-<form class="form form--login form--invalid">
-  <p class="form__message form__message--warning">Не верно введен логин или пароль</p>
-  <div class="form__row form__row--invalid">
+<form [formGroup]="loginForm" novalidate (ngSubmit)="signInUser(loginForm.value.login, loginForm.value.password)" class="form">
+  <p *ngIf="hasError" class="form__message form__message--warning">Не верно введен логин или пароль</p>
+  <div [ngClass]="{'form__row': true, 'form__row--invalid': loginForm.controls.login.errors && loginForm.controls.login.dirty}">
     <label class="form__label" for="login">Логин</label>
-    <input id="login" class="form__control" type="text">
-    <span class="form__message form__message--error">* Введите</span>
+    <input id="login" class="form__control" formControlName="login" type="text">
+    <span *ngIf="!loginForm.controls.login.valid && loginForm.controls.login.dirty">
+      <span *ngIf="loginForm.controls.login.hasError('required')" class="form__message form__message--error">* Введите</span>
+      <span  *ngIf="loginForm.controls.login.hasError('pattern')" class="form__message form__message--error">Поле может содержать только латинские буквы.</span>
+    </span>
   </div>
-  <div class="form__row">
+  <div [ngClass]="{'form__row': true, 'form__row--invalid': loginForm.controls.password.errors && loginForm.controls.password.dirty}">
     <label class="form__label" for="password">Пароль</label>
-    <input id="password" class="form__control" type="password">
-    <span class="form__message form__message--error">* Введите</span>
+    <input id="password" class="form__control" formControlName="password" type="password">
+    <span *ngIf="!loginForm.controls.password.valid && loginForm.controls.password.dirty">
+      <span *ngIf="loginForm.controls.password.hasError('required')" class="form__message form__message--error">* Введите</span>
+      <span *ngIf="loginForm.controls.password.hasError('pattern')" class="form__message form__messager--error">Поле может содержать только латинские буквы и цифры.</span>
+    </span>
   </div>
   <div class="form__row">
-    <button class="form__control">Войти</button>
+    <button class="form__control" type="submit" [disabled]="!loginForm.valid">Войти</button>
   </div>
 </form>

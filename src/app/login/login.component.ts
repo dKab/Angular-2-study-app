@@ -1,75 +1,51 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-/*
- * We're loading this component asynchronously
- * We are using some magic with es6-promise-loader that will wrap the module with a Promise
- * see https://github.com/gdi2290/es6-promise-loader for more info
- */
-
-console.log('`About` component loaded asynchronously');
+import LoginService from './login.service';
+import AuthService from '../services/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'login',
-  styles: [`
-       .form__message--warning {
-         display: none;
-       }
-       
-       .form--invalid .form__message--warning {
-          display: block;
-       }
-       
-       .form__row .form__message {
-        display: none;
-       }
-       
-       .form__row--invalid .form__message--warning,
-       .form__row--invalid .form__message--error
-       {
-        display: inline-block;
-       }
-       
-       .form__label {
-          display: inline-block;
-          min-width: 5em;
-       }
-  `],
-  templateUrl: './login.template.html'
+  styleUrls: ['./login.style.css'],
+  templateUrl: './login.template.html',
+  providers: [
+    LoginService
+  ]
 })
 export class Login {
-  localState: any;
-  constructor(public route: ActivatedRoute) {
+  loginForm: FormGroup;
+  hasError: boolean;
 
+  constructor(private loginService: LoginService,
+              private auth: AuthService,
+              private formBuilder: FormBuilder,
+              private router: Router) {
+    this.hasError = false;
+  }
+
+  signInUser(login: string, password: string) {
+    this.loginService.login(login, password)
+      .subscribe((user) => {
+        this.auth.startUserSession(user.name);
+        this.router.navigate(['/courses']);
+      }, () => {
+        this.loginForm.patchValue({password: ''});
+        this.hasError = true;
+      });
   }
 
   ngOnInit() {
-    this.route
-      .data
-      .subscribe((data: any) => {
-        // your resolved data from route
-        this.localState = data.yourData;
-      });
-
-    console.log('hello `About` component');
-    // static data that is bundled
-    // var mockData = require('assets/mock-data/mock-data.json');
-    // console.log('mockData', mockData);
-    // if you're working with mock data you can also use http.get('assets/mock-data/mock-data.json')
-    this.asyncDataWithWebpack();
-  }
-  asyncDataWithWebpack() {
-    // you can also async load mock data with 'es6-promise-loader'
-    // you would do this if you don't want the mock-data bundled
-    // remember that 'es6-promise-loader' is a promise
-    setTimeout(() => {
-
-      System.import('../../assets/mock-data/mock-data.json')
-        .then(json => {
-          console.log('async mockData', json);
-          this.localState = json;
-        });
-
+    this.loginForm = this.formBuilder.group({
+      login: ['', [
+        Validators.required,
+        Validators.pattern('[A-Za-z]+')
+      ]
+      ],
+      password: ['', [
+        Validators.required,
+        Validators.pattern('[A-Za-z0-9]+')
+      ]
+      ],
     });
   }
-
 }

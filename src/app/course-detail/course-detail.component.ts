@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-
+import { Observable } from 'rxjs/Rx';
+import { ActivatedRoute } from '@angular/router';
 import { AppState } from '../app.service';
 
 @Component({
@@ -14,12 +15,17 @@ export class CourseDetail {
   // Set our default values
   localState = { value: '' };
   // TypeScript public modifiers
-  constructor(public appState: AppState) {
+  constructor(public appState: AppState, public route: ActivatedRoute) {
 
   }
 
   ngOnInit() {
-    console.log('hello `Detail` component');
-    // this.title.getData().subscribe(data => this.data = data);
+    this.route
+      .data
+      .subscribe((data: any) => {
+        // your resolved data from route
+        this.localState = data.yourData;
+        console.log(data);
+      });
   }
 }
