@@ -6,19 +6,15 @@
     </div>
     <button class="control-panel__add">Добавить курс</button>
   </div>
-  <div class="course-card">
+  <div *ngFor="let course of courses" class="course-card">
     <div class="course-card__summary">
       <div>
-        <div class="course-card__title">Видеокурс 1</div>
-        <div class="course-card__duration">2 часа 5 минут</div>
-        <div class="course-card__date">08.10.2016</div>
+        <div class="course-card__title">{{ course.title }}</div>
+        <div class="course-card__duration">{{ course.duration }}</div>
+        <div class="course-card__date">{{ course.date }}</div>
       </div>
       <p class="course-card__description">
-        Lorem ipsum ...fdhgfhfdhgfdhgfdh
-        gfhgfdhgfdhgfdhfd
-        hgfdhgfdhgfdhgfdh
-        hgfhgfdhgfdhfd
-        ghfdhfd
+        {{ course.description }}
       </p>
     </div>
     <div class="course-card__actions">

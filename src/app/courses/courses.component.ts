@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-
-
+import CoursesService from '../services/courses.service';
+import Course from '../model/course';
 
 @Component({
   selector: 'courses',
@@ -8,15 +8,17 @@ import { Component } from '@angular/core';
   templateUrl: './courses.template.html'
 })
 export class Courses {
-  // Set our default values
-  localState = { value: '' };
+  courses: Course[];
   // TypeScript public modifiers
-  constructor() {
+  constructor(private service: CoursesService) {
 
   }
 
   ngOnInit() {
-
-    // this.title.getData().subscribe(data => this.data = data);
+      this.service.getCourses()
+        .then((courses) => {
+          this.courses = courses;
+        }
+        ).catch((err) => console.log(err));
   }
 }

@@ -1,4 +1,4 @@
-import User from './user';
+import User from './../model/user';
 import { Observable } from 'rxjs/Rx';
 
 export default class LoginService {
