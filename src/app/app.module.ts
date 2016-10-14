@@ -20,12 +20,14 @@ import { Login } from './login';
 import { CourseDetail } from './course-detail';
 import { NoContent } from './no-content';
 import AuthService from './services/auth.service';
+import { CoursesDataService } from './data.service';
 
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
   AppState,
-  AuthService
+  AuthService,
+  CoursesDataService
 ];
 
 type StoreType = {
