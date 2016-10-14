@@ -61,3 +61,4 @@ npm-debug.log
 *.swp
 
 src/**/*.js
+!src/server/generate.js
