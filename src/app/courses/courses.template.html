@@ -4,22 +4,22 @@
       <input type="text" class="search__input" placeholder="Фрагмент имени или дата">
       <button class="search__button button">Найти</button>
     </div>
-    <button class="control-panel__add">Добавить курс</button>
+    <button class="control-panel__add" (click)="goToAdd();">Добавить курс</button>
   </div>
   <div *ngFor="let course of courses" class="course-card">
     <div class="course-card__summary">
       <div>
         <div class="course-card__title">{{ course.title }}</div>
         <div class="course-card__duration">{{ course.duration }}</div>
-        <div class="course-card__date">{{ course.date }}</div>
+        <div class="course-card__date">{{ course.date | date: 'dd.MM.y' }}</div>
       </div>
       <p class="course-card__description">
         {{ course.description }}
       </p>
     </div>
     <div class="course-card__actions">
-      <button class="course-card__button button">Редактировать</button>
-      <button class="course-card__button button--red">Удалить</button>
+      <button class="course-card__button button" (click)="goToDetail(course);">Редактировать</button>
+      <button class="course-card__button button--red" (click)="deleteCourse(course);"> Удалить</button>
     </div>
   </div>
 </div>

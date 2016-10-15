@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import CoursesService from '../services/courses.service';
 import Course from '../model/course';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'courses',
@@ -9,16 +10,37 @@ import Course from '../model/course';
 })
 export class Courses {
   courses: Course[];
-  // TypeScript public modifiers
-  constructor(private service: CoursesService) {
-
-  }
+  constructor(private service: CoursesService, private router: Router) { }
 
   ngOnInit() {
       this.service.getCourses()
-        .then((courses) => {
-          this.courses = courses;
-        }
-        ).catch((err) => console.log(err));
+        .subscribe((response) => {
+            this.courses = response.json() as Course[];
+          },
+          (err) => {
+            console.error('An error occurred', err);
+          }
+        );
+  }
+
+  deleteCourse(course: Course) {
+    this.service.deleteCourse(course.id)
+      .subscribe(() => {
+        this.courses = this.courses.filter(c => c !== course);
+      }, (err) => {
+        console.error('Could not delete a course', err);
+      });
+  }
+
+  goToDetail(course: Course) {
+    this.router.navigate([`/course-detail/${course.id}`]);
+  }
+
+  goToAdd() {
+    this.router.navigate(['/course-detail']);
+  }
+
+  updateCourses() {
+
   }
 }

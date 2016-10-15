@@ -1,9 +1,7 @@
 var faker = require('faker');
 module.exports = function () {
  let fakeData = {
-   courses: {
-     data: []
-   }
+   courses: []
  };
 
  for (let i=0; i<25; i++) {
@@ -21,7 +19,7 @@ module.exports = function () {
      authors: authors
    };
 
-   fakeData.courses.data.push(course);
+   fakeData.courses.push(course);
  }
 
  return fakeData;
