@@ -1,3 +1,5 @@
+import './rxjs-extensions.ts';
+
 import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -21,13 +23,16 @@ import { CourseDetail } from './course-detail';
 import { NoContent } from './no-content';
 import AuthService from './services/auth.service';
 import CoursesService from './services/courses.service';
+import { CoursesSearch } from './courses/courses-search/courses-search.component';
+import { DatePipe } from '@angular/common';
 
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
   AppState,
   AuthService,
-  CoursesService
+  CoursesService,
+  DatePipe
 ];
 
 type StoreType = {
@@ -46,6 +51,7 @@ type StoreType = {
     Login,
     Courses,
     CourseDetail,
+    CoursesSearch,
     NoContent
   ],
   imports: [ // import Angular's modules

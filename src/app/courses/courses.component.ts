@@ -13,20 +13,23 @@ export class Courses {
   constructor(private service: CoursesService, private router: Router) { }
 
   ngOnInit() {
-      this.service.getCourses()
-        .subscribe((response) => {
-            this.courses = response.json() as Course[];
-          },
-          (err) => {
-            console.error('An error occurred', err);
-          }
-        );
+    this.getCourses();
+  }
+
+  getCourses() {
+    this.service.getCourses()
+      .subscribe((courses) => {
+        this.courses = courses;
+      }, err => {
+        console.error('An error occurred', err);
+        this.courses = [];
+      });
   }
 
   deleteCourse(course: Course) {
-    this.service.deleteCourse(course.id)
+   this.service.deleteCourse(course.id)
       .subscribe(() => {
-        this.courses = this.courses.filter(c => c !== course);
+        this.courses = this.courses.filter(c => c.id !== course.id);
       }, (err) => {
         console.error('Could not delete a course', err);
       });
@@ -40,7 +43,7 @@ export class Courses {
     this.router.navigate(['/course-detail']);
   }
 
-  updateCourses() {
-
+  onFilterChange(courses: Course[]) {
+     this.courses = courses;
   }
 }

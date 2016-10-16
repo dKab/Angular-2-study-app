@@ -1,8 +1,7 @@
 <div class="courses">
   <div class="controls-panel">
-    <div class="search controls-panel__search">
-      <input type="text" class="search__input" placeholder="Фрагмент имени или дата">
-      <button class="search__button button">Найти</button>
+    <div class="controls-panel__search">
+      <courses-search (onFilterChange)="onFilterChange($event)">></courses-search>
     </div>
     <button class="control-panel__add" (click)="goToAdd();">Добавить курс</button>
   </div>
