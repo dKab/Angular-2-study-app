@@ -15,6 +15,11 @@ export default class CoursesService {
       .map((r: Response) => r.json() as Course[]);
   }
 
+  getCourse(id: number): Observable<Course> {
+    return this.http.get(`${this.coursesUrl}/${id}`)
+      .map((r: Response) => r.json() as Course);
+  }
+
   deleteCourse(id: number)  {
       const url = `${this.coursesUrl}/${id}`;
       return this.http.delete(url);

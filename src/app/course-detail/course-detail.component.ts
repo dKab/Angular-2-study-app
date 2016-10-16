@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
-import { ActivatedRoute } from '@angular/router';
-import { AppState } from '../app.service';
+import { ActivatedRoute, Params } from '@angular/router';
+import CoursesService from '../services/courses.service';
+import Course from '../model/course';
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'course-detail',
@@ -12,20 +15,34 @@ import { AppState } from '../app.service';
   templateUrl: './course-detail.template.html'
 })
 export class CourseDetail {
-  // Set our default values
-  localState = { value: '' };
+  course: Course;
+  form: FormGroup;
   // TypeScript public modifiers
-  constructor(public appState: AppState, public route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder,
+              private router: Router,  private coursesService: CoursesService, private datePipe: DatePipe) { }
 
+  ngOnInit(): void {
+    this.route.params.forEach((params: Params) => {
+      if (!isNaN(parseInt(params['id']))) {
+        let id = +params['id'];
+        this.coursesService.getCourse(id)
+          .forEach(course => {
+            this.course = course;
+            this.initForm(this.course);
+          });
+      } else if (params['id'] === 'new') {
+        this.initForm();
+      }
+    });
   }
+  goToCourses() { this.router.navigate(['/courses']); }
 
-  ngOnInit() {
-    this.route
-      .data
-      .subscribe((data: any) => {
-        // your resolved data from route
-        this.localState = data.yourData;
-        console.log(data);
-      });
+  private initForm(course: Course = null) {
+    this.form = this.formBuilder.group({
+      title: course ? course.title : '',
+      duration: course ? course.duration : '',
+      date: course? this.datePipe.transform(course.date, 'dd.MM.y') : '',
+      description: course ? course.description : ''
+    });
   }
 }

@@ -1,46 +1,29 @@
-<div class="course-detail">
-  <form class="form">
+<div class="course-detail" *ngIf="form">
+  <form class="form" [formGroup]="form">
     <div class="form__row">
       <label class="form__label" for="title">Название</label>
-      <input id="title" class="form__control" type="text">
+      <input id="title" class="form__control" formControlName="title" type="text">
     </div>
     <div class="form__row">
       <label class="form__label" for="description">Описание</label>
-      <textarea id="description" class="form__control" type="text"></textarea>
+      <textarea id="description" class="form__control" formControlName="description" type="text"></textarea>
     </div>
     <div class="form__row">
       <label class="form__label" for="date">Дата</label>
-      <input id="date" class="form__control" type="text">
+      <input id="date" class="form__control" formControlName="date" type="text">
     </div>
     <div class="form__row">
       <label class="form__label" for="duration">Продолжительность</label>
-      <input id="duration" class="form__control" type="text">
+      <input id="duration" class="form__control" formControlName="duration" type="text">
       <span>3 часа 3 мин</span>
     </div>
     <div class="form__row">
       <label class="form__label">Список авторов</label>
-      <div class="multiselect"></div>
-      <div class="multiselect__selected">
-        <ul>
-          <li class="multiselect__option">Иванов</li>
-          <li class=" multiselect__option multiselect__option--active">Петров</li>
-          <li class="multiselect__option">Сидоров</li>
-        </ul>
-      </div>
-      <div class="multiselect__buttons">
-        <button class="select"><</button>
-        <button class="unselect">></button>
-      </div>
-      <div class="multiselect__unselected">
-        <ul>
-          <li  class="multiselect__option">Пушкин</li>
-          <li  class="multiselect__option">Лермонтов</li>
-        </ul>
-      </div>
+      <multiselect class="form__control"></multiselect>
     </div>
     <div class="form__row">
-      <button>Сохранить</button>
-      <button>Отмена</button>
+      <button type="submit">Сохранить</button>
+      <button (click)="goToCourses();" type="button">Отмена</button>
     </div>
   </form>
 </div>

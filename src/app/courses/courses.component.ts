@@ -36,11 +36,11 @@ export class Courses {
   }
 
   goToDetail(course: Course) {
-    this.router.navigate([`/course-detail/${course.id}`]);
+    this.router.navigate([`/course/${course.id}`]);
   }
 
   goToAdd() {
-    this.router.navigate(['/course-detail']);
+    this.router.navigate(['/course/new']);
   }
 
   onFilterChange(courses: Course[]) {
