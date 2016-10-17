@@ -1,8 +1,10 @@
+import Author from './author';
+
 export default class Course {
-  id: number;
-  title: string;
-  duration: number;
-  description: string;
-  authors: Array<string>;
-  date: any;
+  id?: number;
+  title: string = '';
+  duration: number = 60;
+  description: string = '';
+  authors: Array<Author> = [];
+  date: any = new Date();
 }

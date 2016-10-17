@@ -1,4 +1,4 @@
-<div class="course-detail" *ngIf="form">
+<div class="course-detail" *ngIf="form && authors">
   <form class="form" [formGroup]="form">
     <div class="form__row">
       <label class="form__label" for="title">Название</label>
@@ -19,7 +19,11 @@
     </div>
     <div class="form__row">
       <label class="form__label">Список авторов</label>
-      <multiselect class="form__control"></multiselect>
+      <multiselect [options]="authors"
+                   [selectedIds]="selectedAuthors"
+                   (onSelectionChange)="onAuthorsSelectionChange($event)"
+                   class="form__control">
+      </multiselect>
     </div>
     <div class="form__row">
       <button type="submit">Сохранить</button>

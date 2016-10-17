@@ -5,6 +5,8 @@ import Course from '../model/course';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import AuthorsService from '../services/authors.service';
+import Author from '../model/author';
 
 @Component({
   selector: 'course-detail',
@@ -16,14 +18,17 @@ import { DatePipe } from '@angular/common';
 })
 export class CourseDetail {
   course: Course;
+  authors: Author[];
+  selectedAuthors: number[];
   form: FormGroup;
   // TypeScript public modifiers
   constructor(private route: ActivatedRoute, private formBuilder: FormBuilder,
-              private router: Router,  private coursesService: CoursesService, private datePipe: DatePipe) { }
+    private router: Router,  private coursesService: CoursesService,
+    private datePipe: DatePipe, private authorsService: AuthorsService) { }
 
   ngOnInit(): void {
     this.route.params.forEach((params: Params) => {
-      if (!isNaN(parseInt(params['id']))) {
+      if (!isNaN(parseInt(params['id'], 10))) {
         let id = +params['id'];
         this.coursesService.getCourse(id)
           .forEach(course => {
@@ -31,18 +36,31 @@ export class CourseDetail {
             this.initForm(this.course);
           });
       } else if (params['id'] === 'new') {
-        this.initForm();
+        this.course = new Course();
+        this.initForm(this.course);
       }
     });
+
+    this.authorsService.getAuthors()
+      .subscribe( authors => {
+        this.authors = authors;
+        this.selectedAuthors = this.course.authors.map(author => author.id);
+      }, err => console.error(err));
   }
+
   goToCourses() { this.router.navigate(['/courses']); }
 
-  private initForm(course: Course = null) {
+  onAuthorsSelectionChange(selectedAuthors: number[]) {
+    this.course.authors = this.authors.filter(author =>
+      this.selectedAuthors.indexOf(author.id) >= 0 );
+  }
+
+  private initForm(course: Course) {
     this.form = this.formBuilder.group({
-      title: course ? course.title : '',
-      duration: course ? course.duration : '',
-      date: course? this.datePipe.transform(course.date, 'dd.MM.y') : '',
-      description: course ? course.description : ''
+      title: course.title,
+      duration: course.id ? course.duration : '',
+      date: course.id ? this.datePipe.transform(course.date, 'dd.MM.y') : '',
+      description: course.description
     });
   }
 }

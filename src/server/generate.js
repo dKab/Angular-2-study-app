@@ -1,14 +1,18 @@
 var faker = require('faker');
 module.exports = function () {
  let fakeData = {
-   courses: []
- };
+   courses: [],
+   authors: []
+ }, numberOfCourses = 25;
 
- for (let i=0; i<25; i++) {
-   let authors = [], course;
+ for (let i=0; i<numberOfCourses; i++) {
+   let authors = [], authorsPerCourse = 3, course;
 
-   for (let i = 0; i < 3; i++) {
-      authors.push(faker.name.findName());
+   for (let k = 0; k < authorsPerCourse; k++) {
+      authors.push({
+        id: (i*authorsPerCourse)+k,
+        name: faker.name.findName()
+      });
    }
    course = {
      id: i,
@@ -20,6 +24,7 @@ module.exports = function () {
    };
 
    fakeData.courses.push(course);
+   fakeData.authors.push(...authors);
  }
 
  return fakeData;

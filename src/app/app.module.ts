@@ -25,12 +25,14 @@ import CoursesService from './services/courses.service';
 import { CoursesSearch } from './courses/courses-search/courses-search.component';
 import { DatePipe } from '@angular/common';
 import { Multiselect } from './course-detail/multiselect';
+import AuthorsService from './services/authors.service';
 
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
   AuthService,
   CoursesService,
+  AuthorsService,
   DatePipe
 ];
 

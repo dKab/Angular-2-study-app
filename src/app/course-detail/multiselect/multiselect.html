@@ -7,8 +7,8 @@
     </ul>
   </div>
   <div class="multiselect__buttons">
-    <button class="select" type="button"><</button>
-    <button class="unselect" type="button">></button>
+    <button class="select" type="button" (click)="select(unselectedActive)"><</button>
+    <button class="unselect" type="button" (click)="unselect(selectedActive)">></button>
   </div>
   <div class="multiselect__unselected">
     <ul>
