@@ -26,6 +26,7 @@ import { CoursesSearch } from './courses/courses-search/courses-search.component
 import { DatePipe } from '@angular/common';
 import { Multiselect } from './course-detail/multiselect';
 import AuthorsService from './services/authors.service';
+import SelectableList from './course-detail/multiselect/selectable-list';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -53,6 +54,7 @@ type StoreType = {
     CourseDetail,
     CoursesSearch,
     Multiselect,
+    SelectableList,
     NoContent
   ],
   imports: [ // import Angular's modules

@@ -1,32 +1,45 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Unique, numberOrString } from '../../model/unique';
+import { uniqueAndNamed, numberOrString } from '../../model/interfaces';
 
 @Component({
   selector: 'multiselect',
+
   templateUrl: './multiselect.html',
   styleUrls: ['./multiselect.css']
 })
 export class Multiselect {
-  @Input() options: Unique[];
+  @Input() options: uniqueAndNamed[];
   @Input() selectedIds: numberOrString[];
-  unselectedActive: Unique;
-  selectedActive: Unique;
   @Output() onSelectionChange = new EventEmitter<numberOrString[]>();
 
-  constructor() {
+  unselectedActive: uniqueAndNamed;
+  selectedActive: uniqueAndNamed;
+  unselectedOptions: uniqueAndNamed[];
+  selectedOptions:  uniqueAndNamed[];
 
-  }
+  constructor() {}
 
   ngOnInit() {
-    console.log(this.options);
-    console.log(this.selectedIds);
+    this.unselectedOptions = this.options.filter(option =>
+      this.selectedIds.indexOf(option.id) === -1);
+    this.selectedOptions = this.options.filter(option =>
+      this.selectedIds.indexOf(option.id) !== -1);
   }
 
-  select(option: Unique) {
+  setUnselectedActive(active: uniqueAndNamed) {
+
 
   }
 
-  unselect(option: Unique) {
+  setSelectedActive(active: uniqueAndNamed) {
+
+  }
+
+  select(option: uniqueAndNamed) {
+
+  }
+
+  unselect(option: uniqueAndNamed) {
 
   }
 }

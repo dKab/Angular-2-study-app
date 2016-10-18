@@ -7,8 +7,10 @@ import { DatePipe } from '@angular/common';
   selector: 'courses-search',
   template: `
      <div class="search">
-      <input type="text" #term (keyup)="0"  class="search__input" placeholder="Фрагмент имени или дата">
-      <button class="search__button button" (click)="filterCourses(term.value)">Найти</button>
+      <input type="text" #term (keyup)="0"  class="search__input"
+       placeholder="Фрагмент имени или дата">
+      <button class="search__button button" 
+      (click)="filterCourses(term.value)">Найти</button>
      </div>
   `
 })
