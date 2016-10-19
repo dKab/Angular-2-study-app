@@ -24,9 +24,9 @@ import AuthService from './services/auth.service';
 import CoursesService from './services/courses.service';
 import { CoursesSearch } from './courses/courses-search/courses-search.component';
 import { DatePipe } from '@angular/common';
-import { Multiselect } from './course-detail/multiselect';
+import { Multiselect } from './course-detail/multiselect/multiselect.component';
 import AuthorsService from './services/authors.service';
-import SelectableList from './course-detail/multiselect/selectable-list';
+import SelectableList from './course-detail/multiselect/selectable-list/selectable-list.component';
 
 // Application wide providers
 const APP_PROVIDERS = [

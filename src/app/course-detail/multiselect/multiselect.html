@@ -1,14 +1,17 @@
 <div class="multiselect">
-  <div class="multiselect__selected">
-    <ul>
-      <li class="multiselect__option">Иванов</li>
-      <li class=" multiselect__option multiselect__option--active">Петров</li>
-      <li class="multiselect__option">Сидоров</li>
-    </ul>
-  </div>
+  <selectable-list
+    *ngIf="selectedOptions"
+    class="multiselect__selected"
+  [list]="selectedOptions"
+   (onSelect)="setSelectedActive($event)"
+  >
+  </selectable-list>
   <div class="multiselect__buttons">
     <button class="select" type="button" (click)="select(unselectedActive)"><</button>
     <button class="unselect" type="button" (click)="unselect(selectedActive)">></button>
   </div>
-  <selectable-list class="multiselect__unselected" [list]="unselectedOptions" (onSelect)="setUnselectedActive($event)"></selectable-list>
+  <selectable-list *ngIf="unselectedOptions"
+    class="multiselect__unselected"
+                   [list]="unselectedOptions"
+                   (onSelect)="setUnselectedActive($event)"></selectable-list>
 </div>
