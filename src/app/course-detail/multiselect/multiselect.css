@@ -11,3 +11,8 @@
   vertical-align: top;
   margin-top: 35px;
 }
+
+.select--multiple {
+  width: 12em;
+  height: 10em;
+}

@@ -1,5 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { uniqueAndNamed, numberOrString } from '../../model/interfaces';
+import { NgModel } from '@angular/forms';
+
 
 @Component({
   selector: 'multiselect',
@@ -11,41 +13,28 @@ export class Multiselect {
   @Input() selectedIds: numberOrString[];
   @Output() onSelectionChange = new EventEmitter<numberOrString[]>();
 
-  unselectedActive: uniqueAndNamed;
-  selectedActive: uniqueAndNamed;
   unselectedOptions: uniqueAndNamed[];
   selectedOptions:  uniqueAndNamed[];
+  selected: uniqueAndNamed[];
+  unselected: uniqueAndNamed[];
 
   constructor() {}
 
   ngOnInit() {
-    this.unselectedOptions = this.options.filter(option =>
-      this.selectedIds.indexOf(option.id) === -1);
-    this.selectedOptions = this.options.filter(option =>
-      this.selectedIds.indexOf(option.id) !== -1);
-  }
-
-  setUnselectedActive(active: uniqueAndNamed) : void {
-    this.unselectedActive = active;
-  }
-
-  setSelectedActive(active: uniqueAndNamed) : void {
-    this.selectedActive = active;
+    this.unselectedOptions = this.options.filter(option => this.selectedIds.indexOf(option.id) === -1);
+    this.selectedOptions = this.options.filter(option => this.selectedIds.indexOf(option.id) !== -1);
   }
 
   select() : void {
-    this.move(this.unselectedActive, 'unselectedOptions', 'selectedOptions');
-    this.onSelectionChange.emit(this.selectedOptions.map(opt => opt.id));
+    this.selectedOptions = this.selectedOptions.concat(this.unselected);
+    this.unselectedOptions = this.unselectedOptions.filter(option => this.unselected.indexOf(option) === -1);
+    this.onSelectionChange.emit(this.selectedOptions.map(option => option.id));
   }
 
   unselect() : void {
-    this.move(this.selectedActive, 'selectedOptions', 'unselectedOptions');
-    this.onSelectionChange.emit(this.selectedOptions.map(opt => opt.id));
-  }
-
-  private move(item : uniqueAndNamed, from: string, to : string) : void {
-    this[to] = this[to].concat(item);
-    this[from] = this[from].filter(opt => item.id !== opt.id );
+    this.unselectedOptions = this.unselectedOptions.concat(this.selected);
+    this.selectedOptions = this.selectedOptions.filter(option => this.selected.indexOf(option) === -1);
+    this.onSelectionChange.emit(this.selectedOptions.map(option => option.id));
   }
 }
 

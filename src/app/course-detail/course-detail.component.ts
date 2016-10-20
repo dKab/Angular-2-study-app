@@ -6,7 +6,8 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import AuthorsService from '../services/authors.service';
-import Author from '../model/author';
+import Author from '../model/author'
+import * as moment from 'moment'
 
 @Component({
   selector: 'course-detail',
@@ -54,6 +55,11 @@ export class CourseDetail {
     this.course.authors = this.authors.filter(author =>
       this.selectedAuthors.indexOf(author.id) >= 0 );
   }
+
+  //addOrUpdateCourse() {
+  //  this.course.date = moment(this.form.date, 'DD.MM.YYYY');
+  //
+  //}
 
   private initForm(course: Course) {
     this.form = this.formBuilder.group({

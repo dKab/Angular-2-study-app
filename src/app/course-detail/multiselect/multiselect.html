@@ -1,17 +1,17 @@
 <div class="multiselect">
-  <selectable-list
-    *ngIf="selectedOptions"
-    class="multiselect__selected"
-  [list]="selectedOptions"
-   (onSelect)="setSelectedActive($event)"
+  <select multiple
+          class="select select--multiple multiselect__selected"
+          [(ngModel)]="selected"
   >
-  </selectable-list>
+    <option *ngFor="let option of selectedOptions" [value]="option">{{option.name}}</option>
+  </select>
   <div class="multiselect__buttons">
-    <button class="select" type="button" (click)="select(unselectedActive)"><</button>
-    <button class="unselect" type="button" (click)="unselect(selectedActive)">></button>
+    <button class="select" type="button" (click)="select()"><</button>
+    <button class="unselect" type="button" (click)="unselect()">></button>
   </div>
-  <selectable-list *ngIf="unselectedOptions"
-    class="multiselect__unselected"
-                   [list]="unselectedOptions"
-                   (onSelect)="setUnselectedActive($event)"></selectable-list>
+  <select multiple
+    [(ngModel)]="unselected"
+    class="select select--multiple multiselect__unselected">
+    <option *ngFor="let option of unselectedOptions" [value]="option">{{option.name}}</option>
+  </select>
 </div>
