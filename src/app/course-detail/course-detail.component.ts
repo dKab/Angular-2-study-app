@@ -53,13 +53,17 @@ export class CourseDetail {
 
   onAuthorsSelectionChange(selectedAuthors: number[]) {
     this.course.authors = this.authors.filter(author =>
-      this.selectedAuthors.indexOf(author.id) >= 0 );
+      selectedAuthors.indexOf(author.id) >= 0 );
   }
 
-  //addOrUpdateCourse() {
-  //  this.course.date = moment(this.form.date, 'DD.MM.YYYY');
-  //
-  //}
+  addOrUpdateCourse() {
+     Object.assign(this.course, this.form.value, {date: moment(this.form.value.date, 'DD.MM.YYYY').toISOString() });
+    if (this.course.id) {
+      this.coursesService.updatedCourse(this.course);
+    } else {
+      this.coursesService.addCourse(this.course);
+    }
+  }
 
   private initForm(course: Course) {
     this.form = this.formBuilder.group({

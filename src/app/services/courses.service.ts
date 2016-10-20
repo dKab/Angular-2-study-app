@@ -24,4 +24,14 @@ export default class CoursesService {
       const url = `${this.coursesUrl}/${id}`;
       return this.http.delete(url);
   }
+
+  addCourse(course: Course) {
+    //return this.http.post
+  }
+
+  updatedCourse(course: Course) {
+    //
+  }
+
+
 }
