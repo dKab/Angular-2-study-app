@@ -57,12 +57,16 @@ export class CourseDetail {
   }
 
   addOrUpdateCourse() {
-     Object.assign(this.course, this.form.value, {date: moment(this.form.value.date, 'DD.MM.YYYY').toISOString() });
+    let observable;
+    Object.assign(this.course, this.form.value,
+       {date: moment(this.form.value.date, 'DD.MM.YYYY').toISOString() }
+       );
     if (this.course.id) {
-      this.coursesService.updatedCourse(this.course);
+      observable = this.coursesService.updateCourse(this.course);
     } else {
-      this.coursesService.addCourse(this.course);
+      observable = this.coursesService.addCourse(this.course);
     }
+    observable.subscribe(() => this.goToCourses(), (err) => console.log(err));
   }
 
   private initForm(course: Course) {

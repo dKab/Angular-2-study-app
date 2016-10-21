@@ -26,12 +26,12 @@ export default class CoursesService {
   }
 
   addCourse(course: Course) {
-    //return this.http.post
+    return this.http.post(this.coursesUrl, course)
+      .map((r: Response) => r.json() as Course);
   }
 
-  updatedCourse(course: Course) {
-    //
+  updateCourse(course: Course) {
+    return this.http.put(`${this.coursesUrl}/${course.id}`, course)
+      .map((r: Response) => r.json() as Course);
   }
-
-
 }
