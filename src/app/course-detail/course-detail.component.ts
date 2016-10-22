@@ -56,11 +56,13 @@ export class CourseDetail {
       selectedAuthors.indexOf(author.id) >= 0 );
   }
 
+  onDateChange(date: string) {
+    this.course.date = moment(date, 'DD.MM.YYYY').toISOString();
+  }
+
   addOrUpdateCourse() {
     let observable;
-    Object.assign(this.course, this.form.value,
-       {date: moment(this.form.value.date, 'DD.MM.YYYY').toISOString() }
-       );
+    Object.assign(this.course, this.form.value);
     if (this.course.id) {
       observable = this.coursesService.updateCourse(this.course);
     } else {
@@ -73,7 +75,6 @@ export class CourseDetail {
     this.form = this.formBuilder.group({
       title: course.title,
       duration: course.id ? course.duration : '',
-      date: course.id ? this.datePipe.transform(course.date, 'dd.MM.y') : '',
       description: course.description
     });
   }

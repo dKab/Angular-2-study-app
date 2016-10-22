@@ -9,8 +9,8 @@
       <textarea id="description" class="form__control" formControlName="description" type="text"></textarea>
     </div>
     <div class="form__row">
-      <label class="form__label" for="date">Дата</label>
-      <input id="date" class="form__control" formControlName="date" type="text">
+      <label class="form__label">Дата</label>
+      <date-input (onDateChange)="onDateChange($event)" [value]="course.date | date: 'dd.MM.y'"></date-input>
     </div>
     <div class="form__row">
       <label class="form__label" for="duration">Продолжительность</label>
