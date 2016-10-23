@@ -36,3 +36,7 @@ main {
 .form .form__row {
   margin-top: 10px;
 }
+
+.form__row--invalid .form__control {
+  border: 1px solid red;
+}

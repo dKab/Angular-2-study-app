@@ -1,7 +1,3 @@
-.form__row--invalid .form__control {
-  border: 1px solid red;
-}
-
 .form__label {
   display: inline-block;
   min-width: 5em;

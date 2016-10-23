@@ -26,15 +26,23 @@ export class Multiselect {
   }
 
   select() : void {
+    if (!this.unselected) {
+      return;
+    }
     this.selectedOptions = this.selectedOptions.concat(this.unselected);
     this.unselectedOptions = this.unselectedOptions.filter(option => this.unselected.indexOf(option) === -1);
     this.onSelectionChange.emit(this.selectedOptions.map(option => option.id));
+    this.unselected = null;
   }
 
   unselect() : void {
+    if (!this.selected) {
+      return;
+    }
     this.unselectedOptions = this.unselectedOptions.concat(this.selected);
     this.selectedOptions = this.selectedOptions.filter(option => this.selected.indexOf(option) === -1);
     this.onSelectionChange.emit(this.selectedOptions.map(option => option.id));
+    this.selected = null;
   }
 }
 

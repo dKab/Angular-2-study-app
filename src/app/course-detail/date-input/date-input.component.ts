@@ -1,4 +1,4 @@
-import { Component, Output, Input, EventEmitter } from '@angular/core';
+import { Component, Output, Input, EventEmitter, SimpleChange } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
    (keydown)="checkKey($event)"
    [ngModel]="date"
    maxlength="10"
-   (ngModelChange)="checkModel($event)">{{ date }}`
+   (ngModelChange)="checkModel($event)">`
 })
 export class DateInput {
   @Input() value: string;
@@ -23,16 +23,20 @@ export class DateInput {
     this.date = this.value || this.date;
   }
 
+  ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
+    this.date = changes['value'].currentValue;
+  }
+
   checkKey(event) {
     let index = this.date.length;
 
     switch (event.key) {
       case 'Backspace':
+      case 'Tab':
       case 'ArrowRight':
       case 'ArrowLeft':
             break;
       default:
-
         if (index >= this.charMap.length || !this.charMap[index].test(event.key)) {
           return false;
         }
@@ -48,6 +52,8 @@ export class DateInput {
       }
     }
     this.date = value;
-    this.onDateChange.emit(this.date);
+    if (this.pattern.test(this.date)) {
+      this.onDateChange.emit(this.date);
+    }
   }
 }

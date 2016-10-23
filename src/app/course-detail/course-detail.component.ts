@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import CoursesService from '../services/courses.service';
 import Course from '../model/course';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import AuthorsService from '../services/authors.service';
 import Author from '../model/author'
@@ -11,18 +11,18 @@ import * as moment from 'moment'
 
 @Component({
   selector: 'course-detail',
-  // We need to tell Angular's Dependency Injection which providers are in our app.
-  // Our list of styles in our component. We may add more to compose many styles together
   styleUrls: [ './course-detail.style.css' ],
-  // Every Angular template is first compiled by the browser before Angular runs it's compiler
   templateUrl: './course-detail.template.html'
 })
 export class CourseDetail {
   course: Course;
   authors: Author[];
   selectedAuthors: number[];
+  dateInvalid: boolean;
+  authorsTouched = false;
+  formTouched = false;
   form: FormGroup;
-  // TypeScript public modifiers
+  formInvalid: boolean;
   constructor(private route: ActivatedRoute, private formBuilder: FormBuilder,
     private router: Router,  private coursesService: CoursesService,
     private datePipe: DatePipe, private authorsService: AuthorsService) { }
@@ -52,15 +52,28 @@ export class CourseDetail {
   goToCourses() { this.router.navigate(['/courses']); }
 
   onAuthorsSelectionChange(selectedAuthors: number[]) {
+    this.authorsTouched = true;
     this.course.authors = this.authors.filter(author =>
       selectedAuthors.indexOf(author.id) >= 0 );
   }
 
   onDateChange(date: string) {
-    this.course.date = moment(date, 'DD.MM.YYYY').toISOString();
+    let notTrustedDate = moment.utc(date, 'DD.MM.YYYY');
+    if (notTrustedDate.isValid()) {
+      this.course.date = moment.utc(date, 'DD.MM.YYYY').toISOString();
+      this.dateInvalid = false;
+    } else {
+      this.dateInvalid = true;
+    }
   }
 
   addOrUpdateCourse() {
+    this.formTouched = true;
+    if (!this.course.authors.length || this.dateInvalid || !this.form.valid) {
+      this.formInvalid = true;
+      return;
+    }
+    this.formInvalid = false;
     let observable;
     Object.assign(this.course, this.form.value);
     if (this.course.id) {
@@ -73,8 +86,8 @@ export class CourseDetail {
 
   private initForm(course: Course) {
     this.form = this.formBuilder.group({
-      title: course.title,
-      duration: course.id ? course.duration : '',
+      title: [course.title, [Validators.required]],
+      duration: [course.id ? course.duration : '', [Validators.required, Validators.pattern('[0-9]+')]],
       description: course.description
     });
   }

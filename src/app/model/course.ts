@@ -6,5 +6,5 @@ export default class Course {
   duration: number = 60;
   description: string = '';
   authors: Array<Author> = [];
-  date: any = new Date();
+  date: string;
 }

@@ -1,33 +1,51 @@
 <div class="course-detail" *ngIf="form && authors">
   <form class="form" [formGroup]="form" (ngSubmit)="addOrUpdateCourse()">
-    <div class="form__row">
+    <div [ngClass]="{'form__row': true, 'form__row--invalid': form.controls.title.errors && (form.controls.title.dirty || formTouched )}">
       <label class="form__label" for="title">Название</label>
       <input id="title" class="form__control" formControlName="title" type="text">
+      <span  *ngIf="!form.controls.title.valid && (form.controls.title.dirty || formTouched)" class="form__message form__message--error">
+        Введите название</span>
     </div>
     <div class="form__row">
       <label class="form__label" for="description">Описание</label>
       <textarea id="description" class="form__control" formControlName="description" type="text"></textarea>
     </div>
-    <div class="form__row">
+    <div [ngClass]="{'form__row': true, 'form__row--invalid': dateInvalid || (formTouched && !course.date) }">
       <label class="form__label">Дата</label>
-      <date-input (onDateChange)="onDateChange($event)" [value]="course.date | date: 'dd.MM.y'"></date-input>
+      <date-input class="form__control" (onDateChange)="onDateChange($event)" [value]="course.date ? (course.date | date: 'dd.MM.y') : ''"></date-input>
+      <span  *ngIf="dateInvalid || (formTouched && !course.date)" class="form__message form__message--error">
+        Введите существующую дату в формате дд.мм.гггг</span>
     </div>
-    <div class="form__row">
+    <div [ngClass]="{'form__row': true, 'form__row--invalid': form.controls.duration.errors && (form.controls.duration.dirty  || formTouched)}">
       <label class="form__label" for="duration">Продолжительность</label>
-      <input id="duration" class="form__control" formControlName="duration" type="text">
+      <input id="duration" class="form__control" formControlName="duration" type="number" min="1">
       <span>3 часа 3 мин</span>
+      <span  *ngIf="form.controls.duration.hasError('required') && (form.controls.duration.dirty  || formTouched)"
+             class="form__message form__message--error">
+        Это поле обязательно
+      </span>
+      <span  *ngIf="form.controls.duration.hasError('pattern') && (form.controls.duration.dirty  || formTouched)"
+             class="form__message form__message--error">
+        Введите количество минут (положительное число)
+      </span>
     </div>
-    <div class="form__row">
+    <div [ngClass]="{'form__row': true, 'form__row--invalid': (authorsTouched || formTouched) && (!course.authors || course.authors.length === 0)}">
       <label class="form__label">Список авторов</label>
       <multiselect [options]="authors"
                    [selectedIds]="selectedAuthors"
                    (onSelectionChange)="onAuthorsSelectionChange($event)"
                    class="form__control">
       </multiselect>
+      <span  *ngIf="(authorsTouched || formTouched) && (!course.authors || course.authors.length === 0)"
+             class="form__message form__message--error">
+        Выберите хотя бы одного автора
+      </span>
     </div>
     <div class="form__row">
       <button type="submit">Сохранить</button>
       <button (click)="goToCourses();" type="button">Отмена</button>
     </div>
+    <div *ngIf="formInvalid" class="form__message form__message--warning">Некоторые поля введены некорректно.
+      Исправьте ошибки и попробуйте ещё раз.</div>
   </form>
 </div>
