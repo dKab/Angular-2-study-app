@@ -9,7 +9,7 @@
     <div class="course-card__summary">
       <div>
         <div class="course-card__title">{{ course.title }}</div>
-        <div class="course-card__duration">{{ course.duration }}</div>
+        <div class="course-card__duration">{{ course.duration | duration }}</div>
         <div class="course-card__date">{{ course.date | date: 'dd.MM.y' }}</div>
       </div>
       <p class="course-card__description">

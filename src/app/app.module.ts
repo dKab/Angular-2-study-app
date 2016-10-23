@@ -27,6 +27,8 @@ import { DatePipe } from '@angular/common';
 import { Multiselect } from './course-detail/multiselect/multiselect.component';
 import AuthorsService from './services/authors.service';
 import { DateInput } from './course-detail/date-input/date-input.component';
+import { DurationPipe } from './pipes/duration';
+
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -54,7 +56,8 @@ type StoreType = {
     CoursesSearch,
     Multiselect,
     DateInput,
-    NoContent
+    NoContent,
+    DurationPipe
   ],
   imports: [ // import Angular's modules
     BrowserModule,

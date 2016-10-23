@@ -19,7 +19,7 @@
     <div [ngClass]="{'form__row': true, 'form__row--invalid': form.controls.duration.errors && (form.controls.duration.dirty  || formTouched)}">
       <label class="form__label" for="duration">Продолжительность</label>
       <input id="duration" class="form__control" formControlName="duration" type="number" min="1">
-      <span>3 часа 3 мин</span>
+      <span *ngIf="form.value.duration || form.value.duration === 0">{{ form.value.duration | duration }}</span>
       <span  *ngIf="form.controls.duration.hasError('required') && (form.controls.duration.dirty  || formTouched)"
              class="form__message form__message--error">
         Это поле обязательно
