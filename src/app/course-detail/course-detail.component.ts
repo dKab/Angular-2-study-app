@@ -6,8 +6,9 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import AuthorsService from '../services/authors.service';
-import Author from '../model/author'
+import Author from '../model/author';
 import * as moment from 'moment'
+import CourseService from "../services/course.service";
 
 @Component({
   selector: 'course-detail',
@@ -25,7 +26,7 @@ export class CourseDetail {
   formInvalid: boolean;
   constructor(private route: ActivatedRoute, private formBuilder: FormBuilder,
     private router: Router,  private coursesService: CoursesService,
-    private datePipe: DatePipe, private authorsService: AuthorsService) { }
+    private datePipe: DatePipe, private authorsService: AuthorsService, private courseService: CourseService) { }
 
   ngOnInit(): void {
     this.route.params.forEach((params: Params) => {
@@ -35,10 +36,12 @@ export class CourseDetail {
           .forEach(course => {
             this.course = course;
             this.initForm(this.course);
+            this.setTitle();
           });
       } else if (params['id'] === 'new') {
         this.course = new Course();
         this.initForm(this.course);
+        this.setTitle('Create new course');
       }
     });
 
@@ -47,6 +50,10 @@ export class CourseDetail {
         this.authors = authors;
         this.selectedAuthors = this.course.authors.map(author => author.id);
       }, err => console.error(err));
+  }
+
+  setTitle(name: string = null) {
+    this.courseService.name = name || this.form.value.title;
   }
 
   goToCourses() { this.router.navigate(['/courses']); }

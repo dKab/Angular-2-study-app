@@ -28,12 +28,14 @@ import { Multiselect } from './course-detail/multiselect/multiselect.component';
 import AuthorsService from './services/authors.service';
 import { DateInput } from './course-detail/date-input/date-input.component';
 import { DurationPipe } from './pipes/duration';
+import CourseService from "./services/course.service";
 
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
   AuthService,
   CoursesService,
+  CourseService,
   AuthorsService,
   DatePipe
 ];

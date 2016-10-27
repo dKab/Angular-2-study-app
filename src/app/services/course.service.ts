@@ -1,3 +1,12 @@
-/**
- * Created by dmitriy on 27.10.16.
- */
+export default class CourseService {
+  private _name = '';
+
+  get name() {
+    return this._name;
+  }
+
+  set name(name) {
+    this._name = name;
+  }
+
+}

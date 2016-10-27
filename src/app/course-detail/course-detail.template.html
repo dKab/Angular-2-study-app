@@ -2,7 +2,7 @@
   <form class="form" [formGroup]="form" (ngSubmit)="addOrUpdateCourse()">
     <div [ngClass]="{'form__row': true, 'form__row--invalid': form.controls.title.errors && (form.controls.title.dirty || formTouched )}">
       <label class="form__label" for="title">Название</label>
-      <input id="title" class="form__control" formControlName="title" type="text">
+      <input id="title" class="form__control" (keyup)="setTitle()" formControlName="title" type="text">
       <span  *ngIf="!form.controls.title.valid && (form.controls.title.dirty || formTouched)" class="form__message form__message--error">
         Введите название</span>
     </div>

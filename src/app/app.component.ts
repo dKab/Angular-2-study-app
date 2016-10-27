@@ -1,7 +1,8 @@
-import { Component, ViewEncapsulation, AfterViewInit, ViewChild } from '@angular/core';
-import { CourseDetail} from "./course-detail/course-detail.component";
-import { ActivatedRoute, UrlSegment, RouterState, Router } from '@angular/router';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Observable } from 'rxjs';
+import CourseService from "./services/course.service";
+import CourseService from "./services/course.service";
 /*
  * App Component
  * Top Level Component
@@ -18,12 +19,12 @@ import { Observable } from 'rxjs';
        <div class="header__logo"></div>
        <h1 class="header__text">Logo</h1>
        <nav class="breadcrumbs">
-        <a  routerLink="/courses" class="breadcrumbs__anchor"  routerLinkActive="active">Курсы</a>
-        <!--<a *ngIf="courseComponent" routerLink="/course/" class="breadcrumbs__anchor" routerLinkActive="active">{{ courseComponent.course.title }}</a>-->
+        <a *ngIf="url.indexOf('/course') === 0" routerLink="/courses" class="breadcrumbs__anchor"  routerLinkActive="active">Курсы</a>
+        <span *ngIf="url.indexOf('/course/') === 0" class="breadcrumbs__anchor" routerLinkActive="active">{{ courseService.name }}</span>
        </nav>
       </header>
       <main>
-        <router-outlet (activate)='onActivate($event)'></router-outlet>
+        <router-outlet></router-outlet>
       </main>
     </div>
     <footer class="site-footer">
@@ -33,20 +34,15 @@ import { Observable } from 'rxjs';
 })
 export class App {
   name = 'Angular 2 study app';
-  hookedUp = false;
+  url = '';
 
-  constructor(public route: ActivatedRoute, router: Router) {
-    router.events.subscribe((e) => console.log(e));
+  constructor(private router: Router, public courseService: CourseService) {
+    router.events.subscribe(val => {
+      if (val instanceof NavigationEnd) {
+        this.url = val.urlAfterRedirects;
+      } else {
+        this.url = val.url;
+      }
+    }, err => console.error(err));
   }
-
-  courseComponent: CourseDetail = null;
-
-  onActivate(e) {
-    //console.log('route activated', JSON.stringify(e));
-    if  (e instanceof CourseDetail) {
-      this.courseComponent = e;
-      setTimeout(() => console.log(this.courseComponent.course.title), 0);
-    }
-  }
-
 }
