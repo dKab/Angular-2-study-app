@@ -15,11 +15,9 @@ import { ENV_PROVIDERS } from './environment';
 import { ROUTES } from './app.routes';
 // App is our top level component
 import { App } from './app.component';
-import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { Courses } from './courses';
 import { Login } from './login';
 import { CourseDetail } from './course-detail';
-import { NoContent } from './no-content';
 import AuthService from './services/auth.service';
 import CoursesService from './services/courses.service';
 import { CoursesSearch } from './courses/courses-search/courses-search.component';
@@ -29,10 +27,11 @@ import AuthorsService from './services/authors.service';
 import { DateInput } from './course-detail/date-input/date-input.component';
 import { DurationPipe } from './pipes/duration';
 import CourseService from "./services/course.service";
+import AuthGuard from "./services/auth-guard.service";
 
 // Application wide providers
 const APP_PROVIDERS = [
-  ...APP_RESOLVER_PROVIDERS,
+  AuthGuard,
   AuthService,
   CoursesService,
   CourseService,
@@ -58,7 +57,6 @@ type StoreType = {
     CoursesSearch,
     Multiselect,
     DateInput,
-    NoContent,
     DurationPipe
   ],
   imports: [ // import Angular's modules

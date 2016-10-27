@@ -9,12 +9,23 @@ main {
   width: 760px;
   margin: auto;
 }
-
+.header {
+  overflow: hidden;
+  width: 760px;
+  margin: auto;
+}
 .header__logo {
   display: inline-block;
 }
 .header__text {
   display: inline-block;
+}
+.header__breadcrumbs {
+  display: inline-block;
+}
+.header__user-block {
+  margin-top: 20px;
+  float: right;
 }
 .page-wrap {
   min-height: 100%;

@@ -3,6 +3,8 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Observable } from 'rxjs';
 import CourseService from "./services/course.service";
 import CourseService from "./services/course.service";
+import AuthService from "./services/auth.service";
+
 /*
  * App Component
  * Top Level Component
@@ -18,10 +20,14 @@ import CourseService from "./services/course.service";
       <header class="header">
        <div class="header__logo"></div>
        <h1 class="header__text">Logo</h1>
-       <nav class="breadcrumbs">
+       <nav class="header__breadcrumbs">
         <a *ngIf="url.indexOf('/course') === 0" routerLink="/courses" class="breadcrumbs__anchor"  routerLinkActive="active">Курсы</a>
-        <span *ngIf="url.indexOf('/course/') === 0" class="breadcrumbs__anchor" routerLinkActive="active">{{ courseService.name }}</span>
+        <span *ngIf="url.indexOf('/course/') === 0" class="breadcrumbs__anchor" routerLinkActive="active"> > {{ courseService.name }}</span>
        </nav>
+       <section *ngIf="auth.isLoggedIn()" class="header__user-block">
+          <span class="user-name">{{ auth.getCurrentUserName() }}</span>
+          <a href="javascript:void(0);" (click)="logout()">Logout</a>
+       </section>
       </header>
       <main>
         <router-outlet></router-outlet>
@@ -36,7 +42,7 @@ export class App {
   name = 'Angular 2 study app';
   url = '';
 
-  constructor(private router: Router, public courseService: CourseService) {
+  constructor(private router: Router, public courseService: CourseService, public auth: AuthService) {
     router.events.subscribe(val => {
       if (val instanceof NavigationEnd) {
         this.url = val.urlAfterRedirects;
@@ -45,4 +51,10 @@ export class App {
       }
     }, err => console.error(err));
   }
+
+  logout() {
+    this.auth.logout();
+    this.router.navigate(['/login']);
+  }
+
 }

@@ -27,7 +27,9 @@ export class Login {
     this.loginService.login(login, password)
       .subscribe((user) => {
         this.auth.startUserSession(user.name);
-        this.router.navigate(['/courses']);
+        let redirect = this.auth.redirectUrl ? this.auth.redirectUrl : '/courses';
+        // Redirect the user
+        this.router.navigate([redirect]);
       }, () => {
         this.loginForm.patchValue({password: ''});
         this.hasError = true;

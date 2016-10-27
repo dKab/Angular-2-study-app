@@ -1,5 +1,10 @@
+import { Injectable } from '@angular/core';
+
+@Injectable()
 export default class AuthService {
   private storageKey: string;
+  redirectUrl: string;
+
 
   constructor() {
     this.storageKey = 'username';
@@ -10,10 +15,14 @@ export default class AuthService {
   }
 
   isLoggedIn() {
-    return typeof localStorage.getItem(this.storageKey) !== 'null';
+    return !!localStorage.getItem(this.storageKey);
   }
 
   getCurrentUserName() {
     return localStorage.getItem(this.storageKey);
+  }
+
+  logout() {
+    localStorage.removeItem(this.storageKey);
   }
 }
