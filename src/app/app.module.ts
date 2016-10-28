@@ -1,12 +1,14 @@
 import './rxjs-extensions.ts';
 
-import { NgModule, ApplicationRef } from '@angular/core';
+import { NgModule, ApplicationRef, Provider } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Http, XHRBackend, RequestOptions } from '@angular/http';
+
 
 /*
  * Platform and Environment providers/directives/pipes
@@ -28,6 +30,8 @@ import { DateInput } from './course-detail/date-input/date-input.component';
 import { DurationPipe } from './pipes/duration';
 import CourseService from "./services/course.service";
 import AuthGuard from "./services/auth-guard.service";
+import {SafeHttp} from "./services/safe-http.service";
+import Notifications from "./services/notifiacation.service";
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -66,9 +70,16 @@ type StoreType = {
     RouterModule.forRoot(ROUTES, { useHash: true }),
     ReactiveFormsModule
   ],
+
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
-    APP_PROVIDERS
+    APP_PROVIDERS,
+    HTTP_PROVIDERS,
+    new Provider(Http, {
+      useFactory: (backend: XHRBackend, defaultOptions: RequestOptions, notifications: Notifications) =>
+        new SafeHttp(backend, defaultOptions, notifications),
+      deps: [XHRBackend, RequestOptions]
+    })
   ]
 })
 export class AppModule {
