@@ -51,3 +51,16 @@ main {
 .form__row--invalid .form__control {
   border: 1px solid red;
 }
+
+.error-notification {
+  position: relative;
+  border: 1px solid red;
+  width: 760px;
+  margin: 10px auto;
+  min-height: 30px;
+}
+.error-notification__close-btn {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}

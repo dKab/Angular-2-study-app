@@ -7,8 +7,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import AuthorsService from '../services/authors.service';
 import Author from '../model/author';
-import * as moment from 'moment'
-import CourseService from "../services/course.service";
+import * as moment from 'moment';
+import CourseService from '../services/course.service';
 
 @Component({
   selector: 'course-detail',
@@ -26,7 +26,8 @@ export class CourseDetail {
   formInvalid: boolean;
   constructor(private route: ActivatedRoute, private formBuilder: FormBuilder,
     private router: Router,  private coursesService: CoursesService,
-    private datePipe: DatePipe, private authorsService: AuthorsService, private courseService: CourseService) { }
+    private datePipe: DatePipe, private authorsService: AuthorsService,
+              private courseService: CourseService) { }
 
   ngOnInit(): void {
     this.route.params.forEach((params: Params) => {
@@ -37,6 +38,12 @@ export class CourseDetail {
             this.course = course;
             this.initForm(this.course);
             this.setTitle();
+          })
+          .catch(err => {
+            if (err.status === 404) {
+              this.form = null;
+              this.setTitle('404');
+            }
           });
       } else if (params['id'] === 'new') {
         this.course = new Course();
@@ -94,7 +101,8 @@ export class CourseDetail {
   private initForm(course: Course) {
     this.form = this.formBuilder.group({
       title: [course.title, [Validators.required]],
-      duration: [course.id ? course.duration : '', [Validators.required, Validators.pattern('[0-9]+')]],
+      duration: [course.id ? course.duration : '',
+        [Validators.required, Validators.pattern('[0-9]+')]],
       description: course.description
     });
   }
